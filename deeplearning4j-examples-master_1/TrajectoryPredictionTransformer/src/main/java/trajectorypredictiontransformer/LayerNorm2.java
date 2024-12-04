@@ -22,12 +22,15 @@ public class LayerNorm2 {
 
     public LayerNorm2(SameDiff sd, int features, double eps) {
 
+        Random mRandom = new Random();
+        int mRandomNumericalId = mRandom.nextInt(10000);
+
 //        this.sd = TransformerArchitectureModel.sd;
         this.sd = sd;
         this.eps = eps;
 
-        a2 = sd.var(Nd4j.ones(features));
-        b2 = sd.var(Nd4j.zeros(features));
+        a2 = sd.var("a2"+mRandomNumericalId, Nd4j.ones(features));
+        b2 = sd.var("b2"+mRandomNumericalId, Nd4j.zeros(features));
 
 //        LayerNorm2.sd.associateArrayWithVariable(Nd4j.ones(features), a2);
 //        LayerNorm2.sd.associateArrayWithVariable(Nd4j.zeros(features), b2);
@@ -108,7 +111,8 @@ public class LayerNorm2 {
         System.out.println(" LayerNorm2 - meanAfterBroadcastArray.shape()[1] 1-  "+ meanAfterBroadcastArray.shape()[1]);
         System.out.println(" LayerNorm2 - meanAfterBroadcastArray.shape()[2] 1-  "+ meanAfterBroadcastArray.shape()[2]);
 
-        SDVariable meanAfterBroadcast = sd.var(meanAfterBroadcastArray);
+        mRandomNumericalId = mRandom.nextInt(10000);
+        SDVariable meanAfterBroadcast = sd.var("meanAfterBroadcast"+mRandomNumericalId, meanAfterBroadcastArray);
 //        SDVariable meanAfterBroadcast = sd.var("meanAfterBroadcast2"+" - "+mRandomNumericalId, meanAfterBroadcastArray);
         System.out.println(" LayerNorm2 - Arrays.toString(meanAfterBroadcast.getShape()) 1- "+ Arrays.toString(meanAfterBroadcast.getShape()));
         System.out.println(" LayerNorm2 - meanAfterBroadcast.eval(placeholderData).shapeInfoToString() 1- "+ meanAfterBroadcast.eval(placeholderData).shapeInfoToString());

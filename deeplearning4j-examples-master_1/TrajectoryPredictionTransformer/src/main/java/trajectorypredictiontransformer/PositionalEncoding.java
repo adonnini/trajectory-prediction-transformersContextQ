@@ -191,7 +191,7 @@ public class PositionalEncoding {
         System.out.println(" PositionalEncoding - peOutputArray.shape()[1] 3-  "+ peOutputArray.shape()[1]);
         System.out.println(" PositionalEncoding - peOutputArray.shape()[2] 3-  "+ peOutputArray.shape()[2]);
 
-        SDVariable peOutput = sd.var(peOutputArray);
+        SDVariable peOutput = sd.var("peOutput"+mRandomNumericalId, peOutputArray);
 //        SDVariable peOutput = sd.var("peOutput"+" - "+mRandomNumericalId, peOutputArray);
         System.out.println(" PositionalEncoding - Arrays.toString(peOutput.getShape()) - "+ Arrays.toString(peOutput.getShape()));
         System.out.println(" PositionalEncoding - peOutput.eval().shapeInfoToString() - "+ peOutput.eval().shapeInfoToString());

@@ -116,7 +116,7 @@ public class TransformerArchitectureModel {
 
     public static SDVariable dropout(SDVariable input, double dropout) {
 
-        return sd.nn.dropout(input, dropout);
+        return sd.nn.dropout("dropoutReturn"+mRandomNumericalId, input, dropout);
     }
 
     public static SDVariable sequential(SDVariable input, double dropout)
@@ -265,11 +265,11 @@ public class TransformerArchitectureModel {
             System.out.println(" MultiHeadAttention - forward - Q.eval().shapeInfoToString() - "+ Q.eval().shapeInfoToString());
 
             // creating MLP layer for post-attention
-            postAttWeights = sd.var(Nd4j.randn(batch_size, embSize, embSize));
-            postAttBias = sd.var(Nd4j.zeros(1, embSize));
+            postAttWeights = sd.var("postAttWeights"+mRandomNumericalId, Nd4j.randn(batch_size, embSize, embSize));
+            postAttBias = sd.var("postArrBias"+mRandomNumericalId, Nd4j.zeros(1, embSize));
 
             // creating dropout layer
-            dropoutLayer = sd.var(Nd4j.scalar(dropout));
+            dropoutLayer = sd.var("dropoutLayer"+mRandomNumericalId, Nd4j.scalar(dropout));
 
             // Same mask applied to all h heads.
             if (mask != null) {
@@ -311,17 +311,17 @@ public class TransformerArchitectureModel {
             INDArray QArray = qLinear.getArr();
             INDArray QArrayNewDimensions = Nd4j.create(batchSize, Q.eval().shape()[2], numHeads, newEmbSize);
             INDArray QArrayNewDimensionsPopulated = QArrayNewDimensions.assign(QArray);
-            SDVariable QNewDimensions = sd.var(QArrayNewDimensionsPopulated);
+            SDVariable QNewDimensions = sd.var("QNewDimensions"+mRandomNumericalId, QArrayNewDimensionsPopulated);
 
             INDArray KArray = kLinear.getArr();
             INDArray KArrayNewDimensions = Nd4j.create(batchSize, K.eval().shape()[2], numHeads, newEmbSize);
             INDArray KArrayNewDimensionsPopulated = KArrayNewDimensions.assign(KArray);
-            SDVariable KNewDimensions = sd.var(KArrayNewDimensionsPopulated);
+            SDVariable KNewDimensions = sd.var("KNewDimensions"+mRandomNumericalId, KArrayNewDimensionsPopulated);
 
             INDArray VArray = vLinear.getArr();
             INDArray VArrayNewDimensions = Nd4j.create(batchSize, V.eval().shape()[2], numHeads, newEmbSize);
             INDArray VArrayNewDimensionsPopulated = VArrayNewDimensions.assign(VArray);
-            SDVariable VNewDimensions = sd.var(VArrayNewDimensionsPopulated);
+            SDVariable VNewDimensions = sd.var("VNewDimensions"+mRandomNumericalId, VArrayNewDimensionsPopulated);
 
             System.out.println(" MultiHeadAttention - forward - Arrays.toString(QNewDimensions.getShape()) - "+ Arrays.toString(QNewDimensions.getShape()));
             System.out.println(" MultiHeadAttention - forward - QNewDimensions.eval().shapeInfoToString() - "+ QNewDimensions.eval().shapeInfoToString());
@@ -435,7 +435,7 @@ public class TransformerArchitectureModel {
             SDVariable pAttn = new SDVariable();
             // applying softmax layer and calculating probability of attention
             if (dropout <= 0.0) {
-                pAttn = sd.nn.softmax(scores, 2);
+                pAttn = sd.nn.softmax("pAttn"+mRandomNumericalId, scores, 2);
 //            INDArray pAttn = Transforms.softmax(scores, 2);
             } else {
                 // applying dropout
@@ -592,11 +592,11 @@ public class TransformerArchitectureModel {
             System.out.println(" MultiHeadAttention2 - forward - Q.eval().shapeInfoToString() - "+ Q.eval().shapeInfoToString());
 
             // creating MLP layer for post-attention
-            postAttWeights2 = sd.var(Nd4j.randn(batch_size, embSize, embSize));
-            postAttBias2 = sd.var(Nd4j.zeros(1, embSize));
+            postAttWeights2 = sd.var("postAttWeights2"+mRandomNumericalId, Nd4j.randn(batch_size, embSize, embSize));
+            postAttBias2 = sd.var("postAttBias2"+mRandomNumericalId, Nd4j.zeros(1, embSize));
 
             // creating dropout layer
-            dropout2 = sd.var(Nd4j.scalar(dropout));
+            dropout2 = sd.var("dropout2"+mRandomNumericalId, Nd4j.scalar(dropout));
 
             // Same mask applied to all h heads.
             if (mask != null) {
@@ -628,17 +628,17 @@ public class TransformerArchitectureModel {
 //            INDArray QArrayNewDimensions = Nd4j.create(batchSize, Q.getShape()[2], numHeads, newEmbSize);
             INDArray QArrayNewDimensions = Nd4j.create(batchSize, Q.eval().shape()[2], numHeads, newEmbSize);
             INDArray QArrayNewDimensionsPopulated = QArrayNewDimensions.assign(QArray);
-            SDVariable QNewDimensions = sd.var(QArrayNewDimensionsPopulated);
+            SDVariable QNewDimensions = sd.var("QNewDimensions"+mRandomNumericalId, QArrayNewDimensionsPopulated);
 
             INDArray KArray = kLinear.getArr();
             INDArray KArrayNewDimensions = Nd4j.create(batchSize, K.eval().shape()[2], numHeads, newEmbSize);
             INDArray KArrayNewDimensionsPopulated = KArrayNewDimensions.assign(KArray);
-            SDVariable KNewDimensions = sd.var(KArrayNewDimensionsPopulated);
+            SDVariable KNewDimensions = sd.var("KNewDimensions"+mRandomNumericalId, KArrayNewDimensionsPopulated);
 
             INDArray VArray = vLinear.getArr();
             INDArray VArrayNewDimensions = Nd4j.create(batchSize, V.eval().shape()[2], numHeads, newEmbSize);
             INDArray VArrayNewDimensionsPopulated = VArrayNewDimensions.assign(VArray);
-            SDVariable VNewDimensions = sd.var(VArrayNewDimensionsPopulated);
+            SDVariable VNewDimensions = sd.var("VNewDimensions"+mRandomNumericalId, VArrayNewDimensionsPopulated);
 
             System.out.println(" MultiHeadAttention2 - forward - Arrays.toString(QNewDimensions.getShape()) - "+ Arrays.toString(QNewDimensions.getShape()));
             System.out.println(" MultiHeadAttention2 - forward - QNewDimensions.eval().shapeInfoToString() - "+ QNewDimensions.eval().shapeInfoToString());
@@ -740,12 +740,12 @@ public class TransformerArchitectureModel {
             SDVariable pAttn = new SDVariable();
             // applying softmax layer and calculating probability of attention
             if (dropout <= 0.0) {
-                pAttn = sd.nn.softmax(scores, 2);
+                pAttn = sd.nn.softmax("pAttn"+mRandomNumericalId, scores, 2);
 //            INDArray pAttn = Transforms.softmax(scores, 2);
             } else {
                 // applying dropout
 //              p_attn = dropout(p_attn)
-                pAttn = dropout(sd.nn.softmax(scores, 2), dropout);
+                pAttn = dropout(sd.nn.softmax("pAttn"+mRandomNumericalId, scores, 2), dropout);
 
             }
             System.out.println(" MultiHeadAttention2 - attention - Arrays.toString(pAttn.getShape()) 2- "+ Arrays.toString(pAttn.getShape()));
@@ -900,12 +900,12 @@ public class TransformerArchitectureModel {
             System.out.println(" MultiHeadAttention3 - forward - Q.eval().shapeInfoToString() - "+ Q.eval().shapeInfoToString());
 
             // creating MLP layer for post-attention
-            postAttWeights3 = sd.var(Nd4j.randn(batch_size, embSize, embSize));
-            postAttBias3 = sd.var(Nd4j.zeros(1, embSize));
+            postAttWeights3 = sd.var("postAttWeights3"+mRandomNumericalId, Nd4j.randn(batch_size, embSize, embSize));
+            postAttBias3 = sd.var("postAttBias3"+mRandomNumericalId, Nd4j.zeros(1, embSize));
 //            postAttBias3 = sd.var("postAttBias3"+" - "+mRandomNumericalId, Nd4j.zeros(1, embSize));
 
             // creating dropout layer
-            dropout3 = sd.var(Nd4j.scalar(dropout));
+            dropout3 = sd.var("dropout3"+mRandomNumericalId, Nd4j.scalar(dropout));
 
             // Same mask applied to all h heads.
             if (mask != null) {
@@ -947,17 +947,17 @@ public class TransformerArchitectureModel {
             INDArray QArray = qLinear.getArr();
             INDArray QArrayNewDimensions = Nd4j.create(batchSize, Q.eval().shape()[2], numHeads, newEmbSize);
             INDArray QArrayNewDimensionsPopulated = QArrayNewDimensions.assign(QArray);
-            SDVariable QNewDimensions = sd.var(QArrayNewDimensionsPopulated);
+            SDVariable QNewDimensions = sd.var("QNewDimensions"+mRandomNumericalId, QArrayNewDimensionsPopulated);
 
             INDArray KArray = kLinear.getArr();
             INDArray KArrayNewDimensions = Nd4j.create(batchSize, K.eval().shape()[2], numHeads, newEmbSize);
             INDArray KArrayNewDimensionsPopulated = KArrayNewDimensions.assign(KArray);
-            SDVariable KNewDimensions = sd.var(KArrayNewDimensionsPopulated);
+            SDVariable KNewDimensions = sd.var("KNewDimensions"+mRandomNumericalId, KArrayNewDimensionsPopulated);
 
             INDArray VArray = vLinear.getArr();
             INDArray VArrayNewDimensions = Nd4j.create(batchSize, V.eval().shape()[2], numHeads, newEmbSize);
             INDArray VArrayNewDimensionsPopulated = VArrayNewDimensions.assign(VArray);
-            SDVariable VNewDimensions = sd.var(VArrayNewDimensionsPopulated);
+            SDVariable VNewDimensions = sd.var("VNewDimensions"+mRandomNumericalId, VArrayNewDimensionsPopulated);
 
             System.out.println(" MultiHeadAttention3 - forward - Arrays.toString(QNewDimensions.getShape()) - "+ Arrays.toString(QNewDimensions.getShape()));
             System.out.println(" MultiHeadAttention3 - forward - QNewDimensions.eval().shapeInfoToString() - "+ QNewDimensions.eval().shapeInfoToString());
@@ -1060,12 +1060,12 @@ public class TransformerArchitectureModel {
             SDVariable pAttn = new SDVariable();
             // applying softmax layer and calculating probability of attention
             if (dropout <= 0.0) {
-                pAttn = sd.nn.softmax(scores, 2);
+                pAttn = sd.nn.softmax("pAttn"+mRandomNumericalId, scores, 2);
 //            INDArray pAttn = Transforms.softmax(scores, 2);
             } else {
                 // applying dropout
 //              p_attn = dropout(p_attn)
-                pAttn = dropout(sd.nn.softmax(scores, 2), dropout);
+                pAttn = dropout(sd.nn.softmax("pAttn"+mRandomNumericalId, scores, 2), dropout);
 
             }
             System.out.println(" MultiHeadAttention3 - attention - Arrays.toString(pAttn.getShape()) 2- "+ Arrays.toString(pAttn.getShape()));
@@ -1259,7 +1259,7 @@ LayerNorm3 layerNorm3 = new LayerNorm3(sd, embSize, 1e-5);
             INDArray dropoutVarArray = dropoutVar.getArr();
             INDArray dropoutVarArrayResized = Nd4j.create(attnResult.eval().shape()[0], attnResult.eval().shape()[1], attnResult.eval().shape()[2]);
             INDArray dropoutVarArrayResizedPopulated = dropoutVarArrayResized.assign(dropoutVarArray);
-            SDVariable dropoutVarResizedPopulated = sd.var(dropoutVarArrayResizedPopulated);
+            SDVariable dropoutVarResizedPopulated = sd.var("dropoutVarResizedPopulated"+mRandomNumericalId, dropoutVarArrayResizedPopulated);
 //            SDVariable dropoutVarResizedPopulated = sd.var("dropoutVarResizedPopulated"+" - "+mRandomNumericalId, dropoutVarArrayResizedPopulated);
             // Residual Add for attention
             residualAttn = dropoutVarResizedPopulated.add(attnResult);
@@ -1340,7 +1340,7 @@ LayerNorm3 layerNorm3 = new LayerNorm3(sd, embSize, 1e-5);
             INDArray inputArray = input.getArr();
             INDArray inputArrayResized = Nd4j.create(multiHeadAttentionOutputAfterDropout.eval().shape()[0], multiHeadAttentionOutputAfterDropout.eval().shape()[1], multiHeadAttentionOutputAfterDropout.eval().shape()[2]);
             INDArray inputArrayResizedPopulated = inputArrayResized.assign(inputArray);
-            SDVariable inputResizedPopulated = sd.var(inputArrayResizedPopulated);
+            SDVariable inputResizedPopulated = sd.var("inputResizedPopulated"+mRandomNumericalId, inputArrayResizedPopulated);
 //            SDVariable inputResizedPopulated = sd.var("inputResizedPopulated"+" - "+mRandomNumericalId, inputArrayResizedPopulated);
 
             SDVariable inputAddMultiheadAttentionOutputAfterDropout = inputResizedPopulated.add(multiHeadAttentionOutputAfterDropout);    // Shape = (B, N ,C)
@@ -1560,7 +1560,7 @@ LayerNorm3 layerNorm3 = new LayerNorm3(sd, embSize, 1e-5);
 //        # creating dropout layer
 //            self.dropout = nn.Dropout(dropout)
 
-            dropoutLayer = sd.var(Nd4j.scalar(dropout));
+            dropoutLayer = sd.var("dropoutLayer"+mRandomNumericalId, Nd4j.scalar(dropout));
 
         }
 
@@ -1583,7 +1583,7 @@ LayerNorm3 layerNorm3 = new LayerNorm3(sd, embSize, 1e-5);
             System.out.println(" DecoderLayer - Arrays.toString(normAttnXOutput.getShape()) - "+ Arrays.toString(normAttnXOutput.getShape()));
             System.out.println(" DecoderLayer - normAttnXOutput.eval().shapeInfoToString() - "+ normAttnXOutput.eval().shapeInfoToString());
 
-            SDVariable dropoutNormAttnXOutput = sd.nn.dropout(attn.forward(sd, normAttn.forward(x), normAttn.forward(x), normAttn.forward(x), targetMask), dropout);
+            SDVariable dropoutNormAttnXOutput = sd.nn.dropout("dropoutNormAttnXOutput"+mRandomNumericalId, attn.forward(sd, normAttn.forward(x), normAttn.forward(x), normAttn.forward(x), targetMask), dropout);
             System.out.println(" DecoderLayer - Arrays.toString(dropoutNormAttnXOutput.getShape()) - "+ Arrays.toString(dropoutNormAttnXOutput.getShape()));
             System.out.println(" DecoderLayer - dropoutNormAttnXOutput.eval().shapeInfoToString() - "+ dropoutNormAttnXOutput.eval().shapeInfoToString());
             System.out.println(" DecoderLayer - dropoutNormAttnXOutput.eval() - "+ dropoutNormAttnXOutput.eval());
@@ -1621,7 +1621,7 @@ LayerNorm3 layerNorm3 = new LayerNorm3(sd, embSize, 1e-5);
             System.out.println(" DecoderLayer - encDecAttnOutput.eval().shapeInfoToString() - "+ encDecAttnOutput.eval().shapeInfoToString());
             System.out.println(" DecoderLayer - encDecAttnOutput.eval() - "+ encDecAttnOutput.eval());
 
-            SDVariable encDecAttnOutputDropout = sd.nn.dropout(encDecAttnOutput, dropout);
+            SDVariable encDecAttnOutputDropout = sd.nn.dropout("encDecAttnOutputDropout"+mRandomNumericalId, encDecAttnOutput, dropout);
             System.out.println(" DecoderLayer - Arrays.toString(encDecAttnOutputDropout.getShape()) - "+ Arrays.toString(encDecAttnOutputDropout.getShape()));
             System.out.println(" DecoderLayer - encDecAttnOutputDropout.eval().shapeInfoToString() - "+ encDecAttnOutputDropout.eval().shapeInfoToString());
             System.out.println(" DecoderLayer - encDecAttnOutputDropout.eval() - "+ encDecAttnOutputDropout.eval());
@@ -1629,7 +1629,7 @@ LayerNorm3 layerNorm3 = new LayerNorm3(sd, embSize, 1e-5);
             INDArray attnOutputarray = attnOutput.getArr();
             INDArray attnOutputarrayResized = Nd4j.create(encDecAttnOutputDropout.eval().shape()[0], encDecAttnOutputDropout.eval().shape()[1], encDecAttnOutputDropout.eval().shape()[2]);
             INDArray attnOutputarrayResizedPopulated = attnOutputarrayResized.assign(attnOutputarray);
-            SDVariable attnOutputResizedPopulated = sd.var(attnOutputarrayResizedPopulated);
+            SDVariable attnOutputResizedPopulated = sd.var("attnOutputResizedPopulated"+mRandomNumericalId, attnOutputarrayResizedPopulated);
 //            SDVariable attnOutputResizedPopulated = sd.var("attnOutputResizedPopulated"+" - "+mRandomNumericalId, attnOutputarrayResizedPopulated);
 
             SDVariable encDecAttnOutputFinal = attnOutputResizedPopulated.add(encDecAttnOutputDropout);
@@ -1655,7 +1655,7 @@ LayerNorm3 layerNorm3 = new LayerNorm3(sd, embSize, 1e-5);
             System.out.println(" DecoderLayer - encDecAttnOutputNormFfSequential.eval().shapeInfoToString() - "+ encDecAttnOutputNormFfSequential.eval().shapeInfoToString());
             System.out.println(" DecoderLayer - encDecAttnOutputNormFfSequential.eval() - "+ encDecAttnOutputNormFfSequential.eval());
 
-            SDVariable encDecAttnOutputNormFfDropout = sd.nn.dropout(encDecAttnOutputNormFfSequential, dropout);
+            SDVariable encDecAttnOutputNormFfDropout = sd.nn.dropout("encDecAttnOutputNormFfDropout"+mRandomNumericalId, encDecAttnOutputNormFfSequential, dropout);
             System.out.println(" DecoderLayer - Arrays.toString(encDecAttnOutputNormFfDropout.getShape()) - "+ Arrays.toString(encDecAttnOutputNormFfDropout.getShape()));
             System.out.println(" DecoderLayer - encDecAttnOutputNormFfDropout.eval().shapeInfoToString() - "+ encDecAttnOutputNormFfDropout.eval().shapeInfoToString());
             System.out.println(" DecoderLayer - encDecAttnOutputNormFfDropout.eval() - "+ encDecAttnOutputNormFfDropout.eval());
