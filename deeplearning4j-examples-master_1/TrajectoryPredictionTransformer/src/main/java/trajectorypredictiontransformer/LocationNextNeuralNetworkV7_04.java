@@ -1526,9 +1526,9 @@ public class LocationNextNeuralNetworkV7_04 {
                     placeholderData.put("label", tNext.getLabels());
 
                     System.out.println( TAG+" "+" fitAndEvaluateTestDataset - outReducedName -  "+ outReducedName);
-                    System.out.println( TAG+" "+" fitAndEvaluateTestDataset - outReducedName.name() -  "+ outReduced.name());
+                    System.out.println( TAG+" "+" fitAndEvaluateTestDataset - outReduced.name() -  "+ outReduced.name());
 
-                    outReduced.setVarName("");
+//                    outReduced.setVarName("");
                     tNext = placeHolderDatasetArrayList.get(j);
                     System.out.println( TAG+" "+" fitAndEvaluateTestDataset - tNext.getFeatures().size(0) 4-  "+ tNext.getFeatures().size(0));
 
@@ -1819,11 +1819,11 @@ public class LocationNextNeuralNetworkV7_04 {
         System.out.println( TAG+" "+" createAndConfigureModel - ======================================================= - ");
         System.out.println( TAG+" "+" createAndConfigureModel - Arrays.toString(label.eval(placeholderData).shape()) - "+ Arrays.toString(label.eval(placeholderData).shape()));
 
-        INDArray labelArray = label.eval(placeholderData);
-//        INDArray labelArray = label.getArr();
-        INDArray labelArrayResized = Nd4j.create(out.eval().shape()[0], out.eval().shape()[1], out.eval().shape()[2]);
-        INDArray labelArrayResizedPopulated = labelArrayResized.assign(labelArray);
-        labelResizedPopulated = sd.var("labelResizedPopulated"+" - "+mRandomNumericalId, labelArrayResizedPopulated);
+//        INDArray labelArray = label.eval(placeholderData);
+////        INDArray labelArray = label.getArr();
+//        INDArray labelArrayResized = Nd4j.create(out.eval().shape()[0], out.eval().shape()[1], out.eval().shape()[2]);
+//        INDArray labelArrayResizedPopulated = labelArrayResized.assign(labelArray);
+//        labelResizedPopulated = sd.var("labelResizedPopulated"+" - "+mRandomNumericalId, labelArrayResizedPopulated);
 
         System.out.println( TAG+" "+" createAndConfigureModel - label.eval(placeholderData).shape()[0] 1-  "+ label.eval(placeholderData).shape()[0]);
         System.out.println( TAG+" "+" createAndConfigureModel - label.eval(placeholderData).shape()[1] 1-  "+ label.eval(placeholderData).shape()[1]);
@@ -1857,6 +1857,12 @@ public class LocationNextNeuralNetworkV7_04 {
 //        outReduced = sd.var("outReduced"+" - "+mRandomNumericalId, outReducedArray);
         System.out.println( TAG+" "+" createAndConfigureModel - outReduced.name() 0-  "+ outReduced.name());
         System.out.println( TAG+" "+" createAndConfigureModel - outReduced.getArr() -  "+ outReduced.getArr());
+
+        INDArray labelArray = label.eval(placeholderData);
+//        INDArray labelArray = label.getArr();
+        INDArray labelArrayResized = Nd4j.create(outReduced.eval().shape()[0], outReduced.eval().shape()[1], outReduced.eval().shape()[2]);
+        INDArray labelArrayResizedPopulated = labelArrayResized.assign(labelArray);
+        labelResizedPopulated = sd.var("labelResizedPopulated"+" - "+mRandomNumericalId, labelArrayResizedPopulated);
 
 //        if(!outReducedName.equalsIgnoreCase(""))
 //        {
@@ -1927,22 +1933,25 @@ public class LocationNextNeuralNetworkV7_04 {
         System.out.println( TAG+" "+" createAndConfigureModel - placeholderData.get(\"label\").shape()[0] 2-  "+ placeholderData.get("label").shape()[0]);
         System.out.println( TAG+" "+" createAndConfigureModel - placeholderData.get(\"label\").shape()[1] 2-  "+ placeholderData.get("label").shape()[1]);
         System.out.println( TAG+" "+" createAndConfigureModel - placeholderData.get(\"label\").shape()[2] 2-  "+ placeholderData.get("label").shape()[2]);
+        System.out.println( TAG+" "+" createAndConfigureModel - labelResizedPopulated.name() -  "+ labelResizedPopulated.name());
+        System.out.println( TAG+" "+" createAndConfigureModel - labelResizedPopulated.getArr() -  "+ labelResizedPopulated.getArr());
         System.out.println( TAG+" "+" createAndConfigureModel - outReducedArray.shape()[0] 3-  "+ outReducedArray.shape()[0]);
         System.out.println( TAG+" "+" createAndConfigureModel - outReducedArray.shape()[1] 3-  "+ outReducedArray.shape()[1]);
         System.out.println( TAG+" "+" createAndConfigureModel - outReducedArray.shape()[2] 3-  "+ outReducedArray.shape()[2]);
 
         System.out.println( TAG+" "+" createAndConfigureModel - outReduced.name() 11-  "+ outReduced.name());
-        lossMSE = sd.loss.meanSquaredError("lossMSE", label, outReduced, null);
-//        SDVariable lossMSE = sd.loss.meanSquaredError("lossMSE", labelResizedPopulated, out, null);
+        lossMSE = sd.loss.meanSquaredError("lossMSE", labelResizedPopulated, outReduced, null);
+//        lossMSE = sd.loss.meanSquaredError("lossMSE", label, outReduced, null);
 //        SDVariable lossMSE = sd.loss.meanSquaredError("lossMSE", labelResizedPopulated, out, null);
 //        SDVariable lossMSE = sd.loss.meanSquaredError("lossMSE", label, out, null);
-//        System.out.println( TAG+" "+" createAndConfigureModel - Arrays.toString(lossMSE.getShape()) - "+ Arrays.toString(lossMSE.getShape()));
-////        System.out.println( TAG+" "+" createAndConfigureModel - lossMSE.eval(placeholderData).shapeInfoToString() - "+ lossMSE.eval(placeholderData).shapeInfoToString());
-////        System.out.println( TAG+" "+" createAndConfigureModel - lossMSE.eval() - "+ lossMSE.eval());
-//        System.out.println( TAG+" "+" createAndConfigureModel - lossMSE.eval(placeholderData) - "+ lossMSE.eval(placeholderData));
-////        System.out.println( TAG+" "+" createAndConfigureModel - lossMSE.eval().shapeInfoToString() - "+ lossMSE.eval().shapeInfoToString());
-////        System.out.println( TAG+" "+" createAndConfigureModel - lossMSE.eval() - "+ lossMSE.eval());
-//        System.out.println( TAG+" "+" createAndConfigureModel - lossMSE.name() - "+ lossMSE.name());
+        System.out.println( TAG+" "+" createAndConfigureModel - Arrays.toString(lossMSE.getShape()) - "+ Arrays.toString(lossMSE.getShape()));
+//        System.out.println( TAG+" "+" createAndConfigureModel - lossMSE.eval(placeholderData).shapeInfoToString() - "+ lossMSE.eval(placeholderData).shapeInfoToString());
+//        System.out.println( TAG+" "+" createAndConfigureModel - lossMSE.eval() - "+ lossMSE.eval());
+        System.out.println( TAG+" "+" createAndConfigureModel - lossMSE.eval(placeholderData) - "+ lossMSE.eval(placeholderData));
+//        System.out.println( TAG+" "+" createAndConfigureModel - lossMSE.eval().shapeInfoToString() - "+ lossMSE.eval().shapeInfoToString());
+//        System.out.println( TAG+" "+" createAndConfigureModel - lossMSE.eval() - "+ lossMSE.eval());
+        System.out.println( TAG+" "+" createAndConfigureModel - lossMSE.name() - "+ lossMSE.name());
+        System.out.println( TAG+" "+" createAndConfigureModel - lossMSE.getArr() -  "+ lossMSE.getArr());
 
 //        SDVariable lossLOG = sd.loss.logLoss("lossLOG", label, out);
 ////            SDVariable loss = sd.loss.logLoss("loss", labelPadded, out);
@@ -1952,7 +1961,8 @@ public class LocationNextNeuralNetworkV7_04 {
 //        System.out.println( TAG+" "+" ======================================================= - ");
 //        System.out.println( TAG+" "+" Arrays.toString(lossLOG.eval().shape()) - "+ Arrays.toString(lossLOG.eval(placeholderData).shape()));
 
-        sd.setLossVariables(lossMSE.name());
+        sd.setLossVariables(lossMSE);
+//        sd.setLossVariables(lossMSE.name());
 //        sd.setLossVariables("lossMSE");
 //        sd.setLossVariables(ns.getName()+"/"+"lossMSE");
 //        sd.setLossVariables("lossLOG");
@@ -1979,10 +1989,10 @@ public class LocationNextNeuralNetworkV7_04 {
                 .dataSetFeatureMapping("input")         //DataSet features array should be associated with variable "input"
                 .dataSetLabelMapping("label")           //DataSet label array should be associated with variable "label"
 //                .minimize("lossLOG")
-                .minimize(lossMSE.name())
+//                .minimize(lossMSE.name())
 //                .minimize("lossMSE")
-                .trainEvaluation(outReduced.name(), 0, evaluation)  // add a training evaluation
 //                .trainEvaluation(outReduced.name(), 0, evaluation)  // add a training evaluation
+                .trainEvaluation(outReduced.name(), 0, evaluation)  // add a training evaluation
 //                .trainEvaluation("outReduced"+" - "+mRandomNumericalId, 0, evaluation)  // add a training evaluation
 //                .trainEvaluation("out", 0, evaluation)  // add a training evaluation
                 .build();
@@ -2581,7 +2591,6 @@ while(trainData.hasNext())
     }
 
     public static void MeanAndStdCalculator()
-
     {
 
         mRandom = new Random();

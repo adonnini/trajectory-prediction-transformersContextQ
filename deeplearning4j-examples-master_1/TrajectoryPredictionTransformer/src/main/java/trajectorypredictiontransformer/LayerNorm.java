@@ -138,6 +138,7 @@ public class LayerNorm {
         System.out.println(" LayerNorm - meanAfterBroadcastArray.shape()[1] 1-  "+ meanAfterBroadcastArray.shape()[1]);
         System.out.println(" LayerNorm - meanAfterBroadcastArray.shape()[2] 1-  "+ meanAfterBroadcastArray.shape()[2]);
 
+        mRandomNumericalId = mRandom.nextInt(100000);
         SDVariable meanAfterBroadcast = sd.var("meanAfterBroadcast"+mRandomNumericalId,meanAfterBroadcastArray);
 //        INDArray meanAfterBroadcastArray2 = meanAfterBroadcast.eval(placeholderData);
 //        SDVariable meanAfterBroadcast = sd.var("meanAfterBroadcast"+" - "+mRandomNumericalId, meanAfterBroadcastArray);
@@ -211,6 +212,7 @@ public class LayerNorm {
 //        System.out.println(" LayerNorm - stdExpandedAfterBroadcast.eval(placeholderData).shapeInfoToString() 1- "+ stdExpandedAfterBroadcast.eval(placeholderData).shapeInfoToString());
 //        System.out.println(" LayerNorm - stdExpandedAfterBroadcast.eval(placeholderData) 1- "+ stdExpandedAfterBroadcast.eval(placeholderData));
 
+        mRandomNumericalId = mRandom.nextInt(100000);
         a2 = sd.var("a2"+mRandomNumericalId, Nd4j.ones(1, 1, xSubMean.eval().shape()[2]));
         b2 = sd.var("b2"+mRandomNumericalId, Nd4j.zeros(xSubMean.eval().shape()[2]));
 
