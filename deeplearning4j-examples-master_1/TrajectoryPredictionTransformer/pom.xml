@@ -179,6 +179,11 @@ information regarding copyright ownership.
             <version>6.0.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.flatbuffers</groupId>
+            <artifactId>flatbuffers-java</artifactId>
+            <version>25.2.10</version>
+        </dependency>
 
     </dependencies>
     <!-- Maven Enforcer: Ensures user has an up to date version of Maven before building -->

@@ -391,7 +391,7 @@ public class LocationNextNeuralNetworkV7_04 {
 
 //        int nEpochs = 1;
 //        int nEpochs = 2;
-        int nEpochs = 2;
+        int nEpochs = 11;
         for (int i = 0; i < nEpochs; i++) {
             System.out.println( TAG+" "+" sameDiff3 - Epoch " + i + " starting. ");
 
@@ -581,6 +581,9 @@ public class LocationNextNeuralNetworkV7_04 {
                     System.out.println( TAG+" "+" sameDiff3 - tNext.getFeatures().size(0) - 2d - "+tNext.getFeatures().size(0));
                     System.out.println( TAG+" "+" sameDiff3 - tNext.getFeatures().size(1) - 2d - "+tNext.getFeatures().size(1));
                     System.out.println( TAG+" "+" sameDiff3 - tNext.getFeatures().size(2) - 2d - "+tNext.getFeatures().size(2));
+                    System.out.println( TAG+" "+" sameDiff3 - tNext.getLabels().size(0) - 2d - "+tNext.getLabels().size(0));
+                    System.out.println( TAG+" "+" sameDiff3 - tNext.getLabels().size(1) - 2d - "+tNext.getLabels().size(1));
+                    System.out.println( TAG+" "+" sameDiff3 - tNext.getLabels().size(2) - 2d - "+tNext.getLabels().size(2));
 
                     t = placeholderDataDatasets.get(j);
 
@@ -591,22 +594,29 @@ public class LocationNextNeuralNetworkV7_04 {
                     System.out.println( TAG+" "+" sameDiff3 - features - dim1 - 2d - "+dim1);
                     System.out.println( TAG+" "+" sameDiff3 - features - dim2 - 2d - "+dim2);
 
+                    dim0 = t.getLabels().size(0);
+                    dim1 = t.getLabels().size(1);
+                    dim2 = t.getLabels().size(2);
+                    System.out.println( TAG+" "+" sameDiff3 - labels - dim0 - 2d - "+dim0);
+                    System.out.println( TAG+" "+" sameDiff3 - labels - dim1 - 2d - "+dim1);
+                    System.out.println( TAG+" "+" sameDiff3 - labels - dim2 - 2d - "+dim2);
 
-                    INDArray outReducedArray = outArray.get(NDArrayIndex.interval(0, tNext.getLabels().size(0)), NDArrayIndex.interval(0, tNext.getLabels().size(1)), NDArrayIndex.interval(0, tNext.getLabels().size(2)));
-//                    INDArray outReducedArray = outArray.get(NDArrayIndex.interval(0, tNext.getFeatures().size(0)), NDArrayIndex.interval(0, tNext.getFeatures().size(1)), NDArrayIndex.interval(0, tNext.getFeatures().size(2)));
-                    System.out.println( TAG+" "+" sameDiff3 - outReducedArray.shape().length 3-  "+ outReducedArray.shape().length);
-                    System.out.println( TAG+" "+" sameDiff3 - outReducedArray.shape()[0] 3-  "+ outReducedArray.shape()[0]);
-                    System.out.println( TAG+" "+" sameDiff3 - outReducedArray.shape()[1] 3-  "+ outReducedArray.shape()[1]);
-                    System.out.println( TAG+" "+" sameDiff3 - outReducedArray.shape()[2] 3-  "+ outReducedArray.shape()[2]);
-                    System.out.println( TAG+" "+" sameDiff3 - outReducedArray 3-  "+ outReducedArray);
 
-                    sd.associateArrayWithVariable(outReducedArray, outReduced);
-//                    outReduced = sd.var("outReduced"+" - "+mRandomNumericalId, outReducedArray);
-                    System.out.println( TAG+" "+" sameDiff3 - outReduced.getShape()[0] 3-  "+ outReduced.getShape()[0]);
-                    System.out.println( TAG+" "+" sameDiff3 - outReduced.getShape()[1] 3-  "+ outReduced.getShape()[1]);
-                    System.out.println( TAG+" "+" sameDiff3 - outReduced.getShape()[2] 3-  "+ outReduced.getShape()[2]);
-                    System.out.println( TAG+" "+" sameDiff3 - outReduced.getArr() 3-  "+ outReduced.getArr());
-                    System.out.println( TAG+" "+" sameDiff3 - outReduced.name() 3-  "+ outReduced.name());
+//                    INDArray outReducedArray = outArray.get(NDArrayIndex.interval(0, tNext.getLabels().size(0)), NDArrayIndex.interval(0, tNext.getLabels().size(1)), NDArrayIndex.interval(0, tNext.getLabels().size(2)));
+////                    INDArray outReducedArray = outArray.get(NDArrayIndex.interval(0, tNext.getFeatures().size(0)), NDArrayIndex.interval(0, tNext.getFeatures().size(1)), NDArrayIndex.interval(0, tNext.getFeatures().size(2)));
+//                    System.out.println( TAG+" "+" sameDiff3 - outReducedArray.shape().length 3-  "+ outReducedArray.shape().length);
+//                    System.out.println( TAG+" "+" sameDiff3 - outReducedArray.shape()[0] 3-  "+ outReducedArray.shape()[0]);
+//                    System.out.println( TAG+" "+" sameDiff3 - outReducedArray.shape()[1] 3-  "+ outReducedArray.shape()[1]);
+//                    System.out.println( TAG+" "+" sameDiff3 - outReducedArray.shape()[2] 3-  "+ outReducedArray.shape()[2]);
+//                    System.out.println( TAG+" "+" sameDiff3 - outReducedArray 3-  "+ outReducedArray);
+//
+//                    sd.associateArrayWithVariable(outReducedArray, outReduced);
+////                    outReduced = sd.var("outReduced"+" - "+mRandomNumericalId, outReducedArray);
+//                    System.out.println( TAG+" "+" sameDiff3 - outReduced.getShape()[0] 3-  "+ outReduced.getShape()[0]);
+//                    System.out.println( TAG+" "+" sameDiff3 - outReduced.getShape()[1] 3-  "+ outReduced.getShape()[1]);
+//                    System.out.println( TAG+" "+" sameDiff3 - outReduced.getShape()[2] 3-  "+ outReduced.getShape()[2]);
+//                    System.out.println( TAG+" "+" sameDiff3 - outReduced.getArr() 3-  "+ outReduced.getArr());
+//                    System.out.println( TAG+" "+" sameDiff3 - outReduced.name() 3-  "+ outReduced.name());
 
                 }
 
@@ -697,7 +707,7 @@ public class LocationNextNeuralNetworkV7_04 {
                 System.out.println( TAG+" "+" sameDiff3 - outArray.shape()[1] 3-  "+ outArray.shape()[1]);
                 System.out.println( TAG+" "+" sameDiff3 - outArray.shape()[2] 3-  "+ outArray.shape()[2]);
 
-//                System.out.println( TAG+" "+" sameDiff3 - estData.getLabels().size() - 2 - "+testData.getLabels().size());
+//                System.out.println( TAG+" "+" sameDiff3 - testData.getLabels().size() - 2 - "+testData.getLabels().size());
                 System.out.println( TAG+" "+" sameDiff3 - trainData.totalOutcomes() - 2 - "+trainData.totalOutcomes());
                 System.out.println( TAG+" "+" sameDiff3 - placeholderDataDatasets.size() - 2 - "+placeholderDataDatasets.size());
                 System.out.println( TAG+" "+" sameDiff3 - placeHolderDataKeyHolder - 2 - "+placeHolderDataKeyHolder);
@@ -828,22 +838,23 @@ public class LocationNextNeuralNetworkV7_04 {
                 //Print evaluation statistics:
 //                System.out.println( TAG+" "+" sameDiff3 - evaluation.stats() - single - "+eval.stats());
 
+                System.out.println( TAG+" "+" sameDiff3 - i 1- "+i);
 
-//                if(loopCount == 3)
-                    if(loopCount == 2)
-//                    if(loopCount == 1)
-                {
-                    System.out.println( TAG+" "+" sameDiff3 - i 1- "+i);
-                    System.out.println( TAG+" "+" sameDiff3 - loopCount 1- "+loopCount);
-//                    placeHolderDatasetArrayList.remove(0);
-
-//                    t2 = t;
-
-                    loopCount = 0;
-
-//                    ++loopCount;
-                    break;
-                }
+////                if(loopCount == 3)
+//                    if(loopCount == 2)
+////                    if(loopCount == 1)
+//                {
+//                    System.out.println( TAG+" "+" sameDiff3 - i 1- "+i);
+//                    System.out.println( TAG+" "+" sameDiff3 - loopCount 1- "+loopCount);
+////                    placeHolderDatasetArrayList.remove(0);
+//
+////                    t2 = t;
+//
+//                    loopCount = 0;
+//
+////                    ++loopCount;
+//                    break;
+//                }
 
             }
 
@@ -929,32 +940,35 @@ public class LocationNextNeuralNetworkV7_04 {
 //                System.out.println( TAG+" "+" sameDiff3 - evaluation.stats() - single - "+eval.stats());
 //            }
 
-            trainData.reset();
-            testData.reset();
-
-//            //Evaluate on test set:
-//            sd.evaluate(testData, outputVariable, eval);
+//DISABLE - START - (^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)
+//            trainData.reset();
+//            testData.reset();
 //
-//            //Print evaluation statistics:
-//            System.out.println( TAG+" "+" sameDiff3 - evaluation.stats() - "+eval.stats());
-
-            System.out.println( TAG+" "+" sameDiff3 - Calling createAndConfigureModel a second time --- ");
-
-            placeholderData = new HashMap<>();
-            testData.reset();
-            placeholderData.put("input",  testData.next().getFeatures());
-            placeholderData.put("label", testData.next().getLabels());
-            testData.reset();
-
-            createAndConfigureModel(placeholderData);
-
-            System.out.println( TAG+" "+" sameDiff3 - outReduced.name() 7-  "+ outReduced.name());
-            outputVariable = outReduced.name();
-
-//            outReduced.setVarName(outReducedName);
-//            System.out.println( TAG+" "+" sameDiff3 - outReduced.name() 7a-  "+ outReduced.name());
-
-            fitAndEvaluateTestDataset();
+////            //Evaluate on test set:
+////            sd.evaluate(testData, outputVariable, eval);
+////
+////            //Print evaluation statistics:
+////            System.out.println( TAG+" "+" sameDiff3 - evaluation.stats() - "+eval.stats());
+//
+//            System.out.println( TAG+" "+" sameDiff3 - Calling createAndConfigureModel a second time --- ");
+//
+//            placeholderData = new HashMap<>();
+//            testData.reset();
+//            placeholderData.put("input",  testData.next().getFeatures());
+//            placeholderData.put("label", testData.next().getLabels());
+//            testData.reset();
+//
+//            createAndConfigureModel(placeholderData);
+//
+//            System.out.println( TAG+" "+" sameDiff3 - outReduced.name() 7-  "+ outReduced.name());
+//            outputVariable = outReduced.name();
+//
+////            outReduced.setVarName(outReducedName);
+////            System.out.println( TAG+" "+" sameDiff3 - outReduced.name() 7a-  "+ outReduced.name());
+//
+//            fitAndEvaluateTestDataset();
+//
+//DISABLE - END - (^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)(^)
 
             System.out.println( TAG+" "+" sameDiff3 - Epoch " + i + " ending ");
 
@@ -1069,12 +1083,12 @@ public class LocationNextNeuralNetworkV7_04 {
         File saveFileForInference = new File("src/main/assets/location_next_neural_network_v7_04.fb");
 //        File saveFileForInference = new File("/home/adonnini1/Development/ContextQSourceCode/NeuralNetworks/deeplearning4j-examples-master_1/dl4j-examples/src/main/assets/location_next_neural_network_v6_07_04.fb");
 
-//        try {
-//            sd.asFlatFile(saveFileForInference, false);
-////            sd.asFlatFile(saveFileForInference, true);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            sd.asFlatFile(saveFileForInference, false);
+//            sd.asFlatFile(saveFileForInference, true);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 //        SameDiff loadedForInference = SameDiff.create();
 //
@@ -1674,17 +1688,17 @@ public class LocationNextNeuralNetworkV7_04 {
 //                System.out.println( TAG+" "+" fitAndEvaluateTestDataset - evaluation.stats() - single - "+eval.stats());
 
 
-//            if(loopCount == 2)
-                    if(loopCount == 1)
-            {
-//                System.out.println( TAG+" "+" fitAndEvaluateTestDataset - i 1- "+i);
-                System.out.println( TAG+" "+" fitAndEvaluateTestDataset - loopCount 1- "+loopCount);
-//                    placeHolderDatasetArrayList.remove(0);
-                loopCount = 0;
-
-//                    ++loopCount;
-                break;
-            }
+////            if(loopCount == 2)
+//                    if(loopCount == 1)
+//            {
+////                System.out.println( TAG+" "+" fitAndEvaluateTestDataset - i 1- "+i);
+//                System.out.println( TAG+" "+" fitAndEvaluateTestDataset - loopCount 1- "+loopCount);
+////                    placeHolderDatasetArrayList.remove(0);
+//                loopCount = 0;
+//
+////                    ++loopCount;
+//                break;
+//            }
 
         }
 
